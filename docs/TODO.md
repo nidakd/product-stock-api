@@ -3,8 +3,8 @@
 ## 1) Proje Kurulum
 
 - [x] `api/` altinda yeni .NET Web API olustur
-- [ ] `web/` altinda yeni React (Vite) olustur
-- [ ] API ve Web icin temel calisma komutlarini dogrula
+- [x] `web/` altinda yeni React (Vite) olustur
+- [x] API ve Web icin temel calisma komutlarini dogrula
 
 ## 2) Backend (API)
 
