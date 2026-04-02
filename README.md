@@ -1,17 +1,17 @@
-# Product Stock Homework
+# Product Stock Management
 
-.NET Web API + React ile ürün stok yönetim sistemi. PostgreSQL otomatik oluşturulur ve seed edilir.
+Bu proje, .NET Web API + React ile geliştirilmiş bir ürün stok yönetim sistemidir. PostgreSQL otomatik oluşturulur ve seed edilir.
 
 ## Özellikler
 
-✅ CRUD işlemleri (Create, Read, Update, Delete)
-✅ Ürün adı ile arama ve filtreleme
-✅ Delete onay modal'ı
-✅ Para formatı (TRY cinsinden)
-✅ Boş liste mesajı
-✅ Responsive dark theme UI
-✅ API logging ve hata yönetimi
-✅ DTO validasyonu
+- CRUD işlemleri (Create, Read, Update, Delete)
+- Ürün adı ile arama ve filtreleme
+- Delete onay modal'ı
+- Para formatı (TRY cinsinden)
+- Boş liste mesajı
+- Responsive dark theme UI
+- API logging ve hata yönetimi
+- DTO validasyonu
 
 ## Klasör Yapısı
 
