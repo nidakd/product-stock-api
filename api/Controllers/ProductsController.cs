@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProductStockApi.Data;
 using ProductStockApi.Models;
 
@@ -8,16 +9,24 @@ namespace ProductStockApi.Controllers;
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    [HttpGet]
-    public ActionResult<IEnumerable<Product>> GetAll()
+    private readonly AppDbContext _context;
+
+    public ProductsController(AppDbContext context)
     {
-        return Ok(ProductStore.GetAll());
+        _context = context;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Product>>> GetAll()
+    {
+        var products = await _context.Products.AsNoTracking().OrderBy(product => product.Id).ToListAsync();
+        return Ok(products);
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<Product> GetById(int id)
+    public async Task<ActionResult<Product>> GetById(int id)
     {
-        var product = ProductStore.GetById(id);
+        var product = await _context.Products.AsNoTracking().FirstOrDefaultAsync(product => product.Id == id);
         if (product is null)
         {
             return NotFound(new { message = "Product not found." });
@@ -27,26 +36,30 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Product> Create([FromBody] Product product)
+    public async Task<ActionResult<Product>> Create([FromBody] Product product)
     {
         if (!ModelState.IsValid)
         {
             return ValidationProblem(ModelState);
         }
 
-        var created = ProductStore.Add(product);
+        _context.Products.Add(product);
+        await _context.SaveChangesAsync();
+        var created = product;
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
     [HttpDelete("{id:int}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var deleted = ProductStore.Delete(id);
-        if (!deleted)
+        var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == id);
+        if (product is null)
         {
             return NotFound(new { message = "Product not found." });
         }
 
+        _context.Products.Remove(product);
+        await _context.SaveChangesAsync();
         return NoContent();
     }
 }

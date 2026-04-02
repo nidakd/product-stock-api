@@ -9,7 +9,7 @@
 ## 2) Backend (API)
 
 - [x] Product modeli ekle: `Id`, `Name`, `Price`, `StockQuantity`
-- [x] In-memory veri saklama yapisi kur
+- [x] PostgreSQL veri saklama yapisi kur
 - [x] `GET /api/products` endpointini tamamla
 - [x] `GET /api/products/{id}` endpointini tamamla
 - [x] `POST /api/products` endpointini tamamla

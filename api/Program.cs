@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ProductStockApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddCors(options =>
 {
@@ -27,6 +30,11 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowFrontend");
 app.MapControllers();
 
-ProductStore.Seed();
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.EnsureCreated();
+    DbSeeder.Seed(dbContext);
+}
 
 app.Run();
