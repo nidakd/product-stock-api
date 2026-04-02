@@ -34,6 +34,11 @@ Ekstra:
 - `docs/PROJECT_PLAN.md`
 - `docs/GIT_WORKFLOW.md`
 
+## Teslim Kanitlari
+
+- Veritabani kayit ekran goruntulerini `docs/screenshots/` altina ekleyin.
+- Ornek dosya adi: `docs/screenshots/db-products.png`
+
 ## Calistirma Notu
 
 `api/appsettings.json` icindeki `DefaultConnection` degerini kendi PostgreSQL kullanici adina ve sifrena gore gerekirse guncelle. Veritabani adi varsayilan olarak `product_stock` olarak olusturulur.
