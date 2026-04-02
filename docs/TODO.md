@@ -19,16 +19,16 @@
 
 ## 3) Frontend (React)
 
-- [ ] Urunleri API'den cekip listele
-- [ ] Yeni urun ekleme formu yap
-- [ ] Her urun satirina silme butonu ekle
-- [ ] Islem sonrasi listeyi otomatik guncelle
-- [ ] Form validasyonu ve hata mesajlari ekle
+- [x] Urunleri API'den cekip listele
+- [x] Yeni urun ekleme formu yap
+- [x] Her urun satirina silme butonu ekle
+- [x] Islem sonrasi listeyi otomatik guncelle
+- [x] Form validasyonu ve hata mesajlari ekle
 
 ## 4) Ekstra Puan
 
-- [ ] Isim bazli arama/filter ozelligi ekle
-- [ ] Arayuz tasarimini iyilestir
+- [x] Isim bazli arama/filter ozelligi ekle
+- [x] Arayuz tasarimini iyilestir
 
 ## 5) Teslim
 

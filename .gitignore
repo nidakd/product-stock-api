@@ -12,6 +12,7 @@ obj/
 # Env
 .env
 .env.*
+!web/.env.example
 
 # OS
 .DS_Store
