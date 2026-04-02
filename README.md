@@ -1,137 +1,68 @@
 # Product Stock Homework
 
-Bu klasor, bootcamp odevi icin sifirdan olusturulan bagimsiz projedir.
-Amac: .NET Web API + React ile basit urun stok yonetim sistemi gelistirmek.
+.NET Web API + React ile ürün stok yönetim sistemi. PostgreSQL otomatik oluşturulur ve seed edilir.
 
-Backend tarafinda PostgreSQL kullaniliyor. Uygulama ilk calistiginda veritabani yoksa otomatik olusturur; sadece PostgreSQL servisinin calisiyor olmasi yeterlidir. Varsayilan baglanti cizgisi `api/appsettings.json` icindedir.
+## Özellikler
 
-## Klasor Yapisi
+✅ CRUD işlemleri (Create, Read, Update, Delete)
+✅ Ürün adı ile arama ve filtreleme
+✅ Delete onay modal'ı
+✅ Para formatı (TRY cinsinden)
+✅ Boş liste mesajı
+✅ Responsive dark theme UI
+✅ API logging ve hata yönetimi
+✅ DTO validasyonu
 
-- `api/` : Backend (.NET Web API)
-- `web/` : Frontend (React)
-- `docs/` : Proje notlari, plan, todo ve teslim dokumanlari
+## Klasör Yapısı
 
-## Odev Kapsami (Kisa)
+- `api/` — .NET 10.0 Web API + EF Core
+- `web/` — React + Vite
+- `docs/screenshots/` — Teslim kanıtları
 
-Zorunlu:
-- Product modeli (Id, Name, Price, StockQuantity)
-- API endpointleri:
-  - GET /api/products
-  - GET /api/products/{id}
-  - POST /api/products
-  - DELETE /api/products/{id}
-- React arayuzunde listeleme, ekleme, silme
-- Veri saklama: PostgreSQL + Entity Framework Core
+## Hızlı Başlangıç
 
-Ekstra:
-- Arama
-- Hata yonetimi
-- Daha iyi UI
-
-## Dokumanlar
-
-- `docs/screenshots/` — Teslim kanıtları: database, UI, API swagger
-
-## Çalıştırma Adımları
-
-### Ön Koşullar
-- PostgreSQL servisinin çalışıyor olması (varsayılan: localhost:5432, user: postgres, password: postgres)
-- Node.js v22+ (npm)
-- .NET 10.0 SDK
-
-### Backend (API) Başlatma
-
+**Backend:**
 ```bash
 cd api
 ASPNETCORE_ENVIRONMENT=Development dotnet run
 ```
+- API: http://localhost:5000
+- Swagger: http://localhost:5000/swagger/index.html
 
-- API http://localhost:5000 üzerinde başlar
-- Swagger UI: http://localhost:5000/swagger/index.html
-- Veritabanı otomatik olarak oluşturulur ve seeded edilir
-
-### Frontend (React) Başlatma
-
+**Frontend:**
 ```bash
 cd web
-npm install  # İlk çalıştırmada
-npm run dev
+npm install && npm run dev
 ```
+- UI: http://localhost:5173
 
-- Frontend http://localhost:5173 üzerinde çalışır
-- API endpoint'lerine otomatik bağlanır
+## API Endpointleri
 
-### Proje Kullanımı
-
-1. **Ürün Ekle**: Form alanlarını doldur ve "Ürün Ekle" butonuna tıkla
-2. **Ürün Listele**: İlk yüklemede veritabanındaki tüm ürünler gösterilir
-3. **Ürün Ara**: "Ara" kutusuna ürün adını yazarak filtrele
-4. **Ürün Düzenle**: Tabloda "Düzenle" butonuna tıkla, modal formu doldur
-5. **Ürün Sil**: Tabloda "Sil" butonuna tıkla, onay modalını doğrula
-
-## API Dokümantasyonu
-
-Tüm API endpointleri **Swagger UI** ile belgelenmiştir:
-```
-http://localhost:5000/swagger/index.html
-```
-
-### Endpointler
-
-| Method | URL | Açıklama |
-|--------|-----|----------|
-| GET | `/api/products` | Tüm ürünleri getir |
-| GET | `/api/products/{id}` | Spesifik ürünü ID ile getir |
-| POST | `/api/products` | Yeni ürün ekle (Name, Price, StockQuantity) |
+| Method | URL | İşlem |
+|--------|-----|-------|
+| GET | `/api/products` | Tüm ürünler |
+| GET | `/api/products/{id}` | Ürün detayı |
+| POST | `/api/products` | Yeni ürün ekle |
 | PUT | `/api/products/{id}` | Ürünü güncelle |
 | DELETE | `/api/products/{id}` | Ürün sil |
 
-### Örnek İstek
-
-**POST /api/products:**
+**Örnek İstek:**
 ```json
 {
-  "name": "Monitor",
-  "price": 2500.00,
-  "stockQuantity": 10
+  "name": "Laptop",
+  "price": 49999.00,
+  "stockQuantity": 5
 }
 ```
 
-**PUT /api/products/{id}:**
-```json
-{
-  "name": "Updated Monitor",
-  "price": 2800.00,
-  "stockQuantity": 8
-}
-```
+## Stack
 
-## Teknoloji Stack
+- **Backend:** .NET 10.0, EF Core, PostgreSQL (Npgsql), Swagger
+- **Frontend:** React 18, Axios, Vite, CSS3
+- **Database:** PostgreSQL (otomatik oluştur + seed)
 
-**Backend:**
-- .NET 10.0 Web API
-- Entity Framework Core 10.0
-- PostgreSQL (Npgsql)
-- Swagger/OpenAPI
+## Teslim Kanıtları
 
-**Frontend:**
-- React 18 (Vite)
-- Axios
-- CSS3 (Dark theme)
-
-**Veritabanı:**
-- PostgreSQL 12+
-- Automatic schema creation on startup
-- Seed data (3 sample products)
-
-## Teslim Kanitlari
-
-Proje tamamlık kanıtları `docs/screenshots/` klasöründe:
-
-- **`api_swagger.png`** — Swagger UI ile API dokümantasyonu (tüm 5 endpoint)
-- **`database_products.png`** — PostgreSQL veritabanı (pgAdmin sorgu sonucu)
-- **`ui_dashboard_chrome.png`** — React UI dashboard (Chrome tarayıcısı)
-
-## Calistirma Notu
-
-`api/appsettings.json` icindeki `DefaultConnection` degerini kendi PostgreSQL kullanici adina ve sifrena gore gerekirse guncelle. Veritabani adi varsayilan olarak `product_stock` olarak olusturulur.
+- `docs/screenshots/api_swagger.png` — Swagger API dokümantasyonu
+- `docs/screenshots/database_products.png` — PostgreSQL veritabanı
+- `docs/screenshots/ui_dashboard_chrome.png` — React dashboard UI
