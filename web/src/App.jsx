@@ -10,6 +10,15 @@ const emptyForm = {
   stockQuantity: '',
 }
 
+const formatPrice = (price) => {
+  return new Intl.NumberFormat('tr-TR', {
+    style: 'currency',
+    currency: 'TRY',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(price)
+}
+
 function App() {
   const [products, setProducts] = useState([])
   const [form, setForm] = useState(emptyForm)
@@ -19,6 +28,7 @@ function App() {
   const [deletingId, setDeletingId] = useState(null)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const [deleteConfirmId, setDeleteConfirmId] = useState(null)
 
   const filteredProducts = useMemo(() => {
     const query = searchTerm.trim().toLowerCase()
@@ -97,11 +107,20 @@ function App() {
       await axios.delete(`${apiBaseUrl}/api/products/${productId}`)
       setProducts((current) => current.filter((product) => product.id !== productId))
       setSuccess('Urun silindi.')
+      setDeleteConfirmId(null)
     } catch {
       setError('Urun silinemedi. Ilgili kayit bulunamadi olabilir.')
     } finally {
       setDeletingId(null)
     }
+  }
+
+  const confirmDelete = (productId) => {
+    setDeleteConfirmId(productId)
+  }
+
+  const cancelDelete = () => {
+    setDeleteConfirmId(null)
   }
 
   return (
@@ -209,7 +228,7 @@ function App() {
           {loading ? (
             <div className="empty-state">Urunler yukleniyor...</div>
           ) : filteredProducts.length === 0 ? (
-            <div className="empty-state">Goruntulenecek urun bulunamadi.</div>
+            <div className="empty-state">Urun listemiz bos. Yukaridan yeni urun ekleyerek basla.</div>
           ) : (
             <div className="table-wrap">
               <table>
@@ -228,13 +247,13 @@ function App() {
                         <strong>{product.name}</strong>
                         <span>ID: {product.id}</span>
                       </td>
-                      <td>{product.price}</td>
+                      <td>{formatPrice(product.price)}</td>
                       <td>{product.stockQuantity}</td>
                       <td>
                         <button
                           type="button"
                           className="danger-button"
-                          onClick={() => handleDelete(product.id)}
+                          onClick={() => confirmDelete(product.id)}
                           disabled={deletingId === product.id}
                         >
                           {deletingId === product.id ? 'Siliniyor...' : 'Sil'}
@@ -248,6 +267,32 @@ function App() {
           )}
         </article>
       </section>
+
+      {deleteConfirmId !== null && (
+        <div className="modal-overlay" onClick={cancelDelete}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Urunu Sil</h3>
+            <p>Bu islemi geri alamazsiniz. Urunu silmek istediginizden emin misiniz?</p>
+            <div className="modal-actions">
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={cancelDelete}
+              >
+                Iptal
+              </button>
+              <button
+                type="button"
+                className="danger-button"
+                onClick={() => handleDelete(deleteConfirmId)}
+                disabled={deletingId === deleteConfirmId}
+              >
+                {deletingId === deleteConfirmId ? 'Siliniyor...' : 'Evet, Sil'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
