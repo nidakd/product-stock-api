@@ -1,7 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using ProductStockApi.Data;
+using ProductStockApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -24,6 +30,9 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// Exception handling middleware
+app.UseExceptionHandlingMiddleware();
 
 if (app.Environment.IsDevelopment())
 {
