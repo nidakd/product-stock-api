@@ -21,6 +21,11 @@
 
 ## Hızlı Başlangıç
 
+Projeyi kontrol etmek için iki terminal aç:
+
+1. API: `http://localhost:5000`
+2. UI: `http://localhost:5173`
+
 **Backend:**
 ```bash
 cd api
@@ -35,6 +40,8 @@ cd web
 npm install && npm run dev
 ```
 - UI: http://localhost:5173
+
+Eğer `5173` doluysa eski `vite` process'ini kapatıp tekrar başlat.
 
 ## API Endpointleri
 
