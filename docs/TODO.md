@@ -2,19 +2,19 @@
 
 ## 1) Proje Kurulum
 
-- [ ] `api/` altinda yeni .NET Web API olustur
+- [x] `api/` altinda yeni .NET Web API olustur
 - [ ] `web/` altinda yeni React (Vite) olustur
 - [ ] API ve Web icin temel calisma komutlarini dogrula
 
 ## 2) Backend (API)
 
-- [ ] Product modeli ekle: `Id`, `Name`, `Price`, `StockQuantity`
-- [ ] In-memory veri saklama yapisi kur
-- [ ] `GET /api/products` endpointini tamamla
-- [ ] `GET /api/products/{id}` endpointini tamamla
-- [ ] `POST /api/products` endpointini tamamla
-- [ ] `DELETE /api/products/{id}` endpointini tamamla
-- [ ] 404 ve basit validasyonlari ekle
+- [x] Product modeli ekle: `Id`, `Name`, `Price`, `StockQuantity`
+- [x] In-memory veri saklama yapisi kur
+- [x] `GET /api/products` endpointini tamamla
+- [x] `GET /api/products/{id}` endpointini tamamla
+- [x] `POST /api/products` endpointini tamamla
+- [x] `DELETE /api/products/{id}` endpointini tamamla
+- [x] 404 ve basit validasyonlari ekle
 - [ ] Swagger ile endpoint testlerini yap
 
 ## 3) Frontend (React)
