@@ -3,7 +3,7 @@
 Bu klasor, bootcamp odevi icin sifirdan olusturulan bagimsiz projedir.
 Amac: .NET Web API + React ile basit urun stok yonetim sistemi gelistirmek.
 
-Backend tarafinda PostgreSQL kullaniliyor. Yerel calistirma icin PostgreSQL servisinin acik olmasi ve `product_stock_homework` adinda bir veritabaninin bulunmasi gerekir. Varsayilan baglanti cizgisi `api/appsettings.json` icindedir.
+Backend tarafinda PostgreSQL kullaniliyor. Uygulama ilk calistiginda veritabani yoksa otomatik olusturur; sadece PostgreSQL servisinin calisiyor olmasi yeterlidir. Varsayilan baglanti cizgisi `api/appsettings.json` icindedir.
 
 ## Klasor Yapisi
 
@@ -36,4 +36,4 @@ Ekstra:
 
 ## Calistirma Notu
 
-`api/appsettings.json` icindeki `DefaultConnection` degerini kendi PostgreSQL kullanici adina ve sifrena gore gerekirse guncelle.
+`api/appsettings.json` icindeki `DefaultConnection` degerini kendi PostgreSQL kullanici adina ve sifrena gore gerekirse guncelle. Veritabani adi varsayilan olarak `product_stock_homework` olarak olusturulur.

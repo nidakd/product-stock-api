@@ -30,11 +30,12 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowFrontend");
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
+await using (var scope = app.Services.CreateAsyncScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.EnsureCreated();
-    DbSeeder.Seed(dbContext);
+    await DatabaseBootstrapper.EnsureDatabaseCreatedAsync(dbContext);
+    await dbContext.Database.EnsureCreatedAsync();
+    await DbSeeder.SeedAsync(dbContext);
 }
 
-app.Run();
+await app.RunAsync();
