@@ -36,4 +36,4 @@ Ekstra:
 
 ## Calistirma Notu
 
-`api/appsettings.json` icindeki `DefaultConnection` degerini kendi PostgreSQL kullanici adina ve sifrena gore gerekirse guncelle. Veritabani adi varsayilan olarak `product_stock_homework` olarak olusturulur.
+`api/appsettings.json` icindeki `DefaultConnection` degerini kendi PostgreSQL kullanici adina ve sifrena gore gerekirse guncelle. Veritabani adi varsayilan olarak `product_stock` olarak olusturulur.
