@@ -37,7 +37,9 @@ Ekstra:
 ## Teslim Kanitlari
 
 - Veritabani kayit ekran goruntulerini `docs/screenshots/` altina ekleyin.
-- Ornek dosya adi: `docs/screenshots/db-products.png`
+- Onerilen dosya adlari:
+  - `docs/screenshots/database_products.png`
+  - `docs/screenshots/ui_dashboard_chrome.png`
 
 ## Calistirma Notu
 

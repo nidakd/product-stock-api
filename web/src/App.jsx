@@ -111,8 +111,11 @@ function App() {
           <p className="eyebrow">Full-Stack Homework</p>
           <h1>Urun Stok Yonetim Paneli</h1>
           <p className="hero-text">
-            Urunleri listele, yeni urun ekle, sil ve isimle ara. Bu ekran odevin
-            temel CRUD ihtiyacini tek sayfada toplar.
+            Bu panel, odevde istenen CRUD akislarini (Create, Read, Update, Delete)
+            tek bir ekranda gostermek icin hazirlandi. Bu ekranda yeni urun eklenerek
+            Create islemi, urun listesi goruntulenerek Read islemi ve urun silinerek
+            Delete islemi test edilebilir. Ayrica arama kutusuyla urunler isme gore
+            filtrelenerek veri daha hizli yonetilebilir.
           </p>
         </div>
 

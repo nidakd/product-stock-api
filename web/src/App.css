@@ -84,6 +84,12 @@
   padding: 24px;
 }
 
+.list-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 620px;
+}
+
 .panel-header h2 {
   margin: 0 0 8px;
   font-size: 1.45rem;
@@ -205,6 +211,9 @@
 .table-wrap {
   margin-top: 18px;
   overflow: auto;
+  max-height: 420px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 14px;
 }
 
 table {
