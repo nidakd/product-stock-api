@@ -82,4 +82,31 @@ public class ProductsController : ControllerBase
         _logger.LogInformation("Product deleted: Id={ProductId}, Name={ProductName}", product.Id, product.Name);
         return NoContent();
     }
+
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult<Product>> Update(int id, [FromBody] UpdateProductRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            _logger.LogWarning("Invalid product update request for Id={ProductId}: {Errors}", id, ModelState.Values.SelectMany(v => v.Errors));
+            return ValidationProblem(ModelState);
+        }
+
+        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+        if (product is null)
+        {
+            _logger.LogWarning("Product not found for update: Id={ProductId}", id);
+            return NotFound(new { message = "Product not found." });
+        }
+
+        product.Name = request.Name;
+        product.Price = request.Price;
+        product.StockQuantity = request.StockQuantity;
+
+        _context.Products.Update(product);
+        await _context.SaveChangesAsync();
+        
+        _logger.LogInformation("Product updated: Id={ProductId}, Name={ProductName}", product.Id, product.Name);
+        return Ok(product);
+    }
 }

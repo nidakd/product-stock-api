@@ -29,6 +29,8 @@ function App() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [deleteConfirmId, setDeleteConfirmId] = useState(null)
+  const [editingId, setEditingId] = useState(null)
+  const [editForm, setEditForm] = useState(emptyForm)
 
   const filteredProducts = useMemo(() => {
     const query = searchTerm.trim().toLowerCase()
@@ -121,6 +123,64 @@ function App() {
 
   const cancelDelete = () => {
     setDeleteConfirmId(null)
+  }
+
+  const startEdit = (product) => {
+    setEditingId(product.id)
+    setEditForm({
+      name: product.name,
+      price: product.price.toString(),
+      stockQuantity: product.stockQuantity.toString(),
+    })
+    setError('')
+    setSuccess('')
+  }
+
+  const cancelEdit = () => {
+    setEditingId(null)
+    setEditForm(emptyForm)
+  }
+
+  const handleEditChange = (event) => {
+    const { name, value } = event.target
+    setEditForm((current) => ({ ...current, [name]: value }))
+  }
+
+  const handleEditSubmit = async (event) => {
+    event.preventDefault()
+    setError('')
+    setSuccess('')
+
+    const trimmedName = editForm.name.trim()
+    const price = Number(editForm.price)
+    const stockQuantity = Number(editForm.stockQuantity)
+
+    if (!trimmedName || Number.isNaN(price) || Number.isNaN(stockQuantity)) {
+      setError('Tum alanlari gecerli sekilde doldur.')
+      return
+    }
+
+    if (price < 0 || stockQuantity < 0) {
+      setError('Fiyat ve stok sifirdan kucuk olamaz.')
+      return
+    }
+
+    try {
+      setSaving(true)
+      await axios.put(`${apiBaseUrl}/api/products/${editingId}`, {
+        name: trimmedName,
+        price,
+        stockQuantity,
+      })
+      setEditForm(emptyForm)
+      setEditingId(null)
+      await fetchProducts()
+      setSuccess('Urun guncellendi.')
+    } catch {
+      setError('Urun guncellenemedi. API hata dondu.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -250,14 +310,23 @@ function App() {
                       <td>{formatPrice(product.price)}</td>
                       <td>{product.stockQuantity}</td>
                       <td>
-                        <button
-                          type="button"
-                          className="danger-button"
-                          onClick={() => confirmDelete(product.id)}
-                          disabled={deletingId === product.id}
-                        >
-                          {deletingId === product.id ? 'Siliniyor...' : 'Sil'}
-                        </button>
+                        <div className="action-buttons">
+                          <button
+                            type="button"
+                            className="edit-button"
+                            onClick={() => startEdit(product)}
+                          >
+                            Duzenle
+                          </button>
+                          <button
+                            type="button"
+                            className="danger-button"
+                            onClick={() => confirmDelete(product.id)}
+                            disabled={deletingId === product.id}
+                          >
+                            {deletingId === product.id ? 'Siliniyor...' : 'Sil'}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -290,6 +359,68 @@ function App() {
                 {deletingId === deleteConfirmId ? 'Siliniyor...' : 'Evet, Sil'}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {editingId !== null && (
+        <div className="modal-overlay" onClick={cancelEdit}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Urunu Duzenle</h3>
+            <form onSubmit={handleEditSubmit} className="modal-form">
+              <label>
+                Urun Adi
+                <input
+                  name="name"
+                  value={editForm.name}
+                  onChange={handleEditChange}
+                  placeholder="Ornek: Monitor"
+                  autoFocus
+                />
+              </label>
+
+              <label>
+                Fiyat
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  name="price"
+                  value={editForm.price}
+                  onChange={handleEditChange}
+                  placeholder="0.00"
+                />
+              </label>
+
+              <label>
+                Stok Adedi
+                <input
+                  type="number"
+                  min="0"
+                  name="stockQuantity"
+                  value={editForm.stockQuantity}
+                  onChange={handleEditChange}
+                  placeholder="0"
+                />
+              </label>
+
+              <div className="modal-actions">
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={cancelEdit}
+                >
+                  Iptal
+                </button>
+                <button
+                  type="submit"
+                  className="primary-button"
+                  disabled={saving}
+                >
+                  {saving ? 'Guncelleniyor...' : 'Kaydet'}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

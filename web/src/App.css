@@ -346,3 +346,66 @@ td span {
 .secondary-button:hover:not(:disabled) {
   background: rgba(71, 85, 105, 0.7);
 }
+
+/* Edit Button */
+.edit-button {
+  background: rgba(59, 130, 246, 0.6);
+  color: #f8fafc;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.edit-button:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.8);
+  border-color: rgba(96, 165, 250, 0.5);
+}
+
+.edit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Action buttons container */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Modal Form */
+.modal-form {
+  display: grid;
+  gap: 16px;
+}
+
+.modal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-form input {
+  background: rgba(30, 41, 59, 0.6);
+  color: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.modal-form input:focus {
+  outline: none;
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.modal-form input::placeholder {
+  color: rgba(203, 213, 225, 0.5);
+}
